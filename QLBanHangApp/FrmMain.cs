@@ -35,5 +35,12 @@ namespace QLBanHangApp
 		{
 			LblDongHo.Text = DateTime.Now.ToString("dd/MM/yyyyy HH:mm:ss");
 		}
+
+		private void MnuQuanLyKhachHang_Click(object sender, EventArgs e)
+		{
+			var f = new FrmQuanLyKhachHang();
+			f.MdiParent = this;
+			f.Show();
+		}
 	}
 }
