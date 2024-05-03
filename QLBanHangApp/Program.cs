@@ -12,7 +12,7 @@ namespace QLBanHangApp
 			// see https://aka.ms/applicationconfiguration.
 			ApplicationConfiguration.Initialize();
 			//Application.Run(new FrmMain());
-			Application.Run(new FrmTimKiemHoaDon());
+			Application.Run(new FrmLogin());
 		}
 	}
 }

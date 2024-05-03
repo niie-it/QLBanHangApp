@@ -15,9 +15,30 @@ namespace QLBanHangApp
 
 		public static DataTable TruyVanLayDuLieu(string sql)
 		{
-			DataTable dt = new DataTable ();
+			DataTable dt = new DataTable();
 			var connection = new SqlConnection(ChuoiKetNoi);
 			var dataAdapter = new SqlDataAdapter(sql, connection);
+			dataAdapter.Fill(dt);
+			return dt;
+		}
+
+		public static DataTable QueryData(string sql, CommandType type, SqlParameter[] parameters)
+		{
+			//type=CommandType.Text ==> sql = "SELECT ..."
+			//type=CommandType.StoredProcedure ==> sql = "tên_storedprocedure"
+			//type=CommandType.TableDirect ==> sql = "tên_bảng"
+			DataTable dt = new DataTable();
+			var connection = new SqlConnection(ChuoiKetNoi);
+			var command = new SqlCommand();
+			command.Connection = connection;
+			command.CommandType = type;
+			command.CommandText = sql;
+
+			if (parameters != null)
+			{
+				command.Parameters.AddRange(parameters);
+			}
+			var dataAdapter = new SqlDataAdapter(command);
 			dataAdapter.Fill(dt);
 			return dt;
 		}
@@ -33,7 +54,7 @@ namespace QLBanHangApp
 				command.Connection.Close();
 				return true;
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				//Handle error
 				return false;
