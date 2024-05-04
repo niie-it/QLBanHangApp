@@ -13,14 +13,16 @@ namespace QLBanHangApp
 {
 	public partial class FrmLogin : Form
 	{
-		public FrmLogin()
+		private FrmMain formMain;
+		public FrmLogin(FrmMain fMain)
 		{
+			formMain = fMain;
 			InitializeComponent();
 		}
 
 		private void BtnDangNhap_Click(object sender, EventArgs e)
 		{
-			var sql = "SELECT * FROM NhanVien WHERE MaDN=@TenDN AND MatKhau=@MatKhau";
+			var sql = "SELECT CONCAT(Ho, ' ', Ten) as HoTen, MaDN, MaNV, VaiTro FROM NhanVien WHERE MaDN=@TenDN AND MatKhau=@MatKhau";
 			var parameters = new SqlParameter[2];
 			parameters[0] = new SqlParameter("TenDN", TxtTenDN.Text);
 			parameters[1] = new SqlParameter("MatKhau", TxtMatKhau.Text);
@@ -29,6 +31,13 @@ namespace QLBanHangApp
 			if (dtNhanVien.Rows.Count > 0)
 			{
 				MessageBox.Show("Đăng nhập thành công");
+				formMain.DaDangNhap = true;
+				formMain.HoTenNhanVien = dtNhanVien.Rows[0]["HoTen"].ToString();
+				formMain.MaNV = dtNhanVien.Rows[0]["MaNV"].ToString();
+				formMain.Quyen = (VaiTro)dtNhanVien.Rows[0]["VaiTro"];
+
+				formMain.PhanQuyen();
+				this.Close();
 			}
 			else
 			{

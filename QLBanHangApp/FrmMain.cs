@@ -42,5 +42,49 @@ namespace QLBanHangApp
 			f.MdiParent = this;
 			f.Show();
 		}
+
+		private void FrmMain_Load(object sender, EventArgs e)
+		{
+			PhanQuyen();
+		}
+
+		public bool DaDangNhap { get; set; } = false;
+		public string HoTenNhanVien { get; set; }
+		public string MaNV { get; set; }
+		public VaiTro Quyen { get; set; }
+
+		public void PhanQuyen()
+		{
+			MnuQuanLyKhachHang.Enabled = DaDangNhap;
+			MnuDangXuat.Enabled = DaDangNhap;
+			MnuDangNhap.Enabled = !DaDangNhap;
+			LblHoTenNhanVien.Text = DaDangNhap ? $"Xin chào: {HoTenNhanVien}" : "Chưa đăng nhập";
+
+			// xét quyền theo vai trò
+			MnuCauHinhHeThong.Enabled = DaDangNhap && Quyen == VaiTro.QuanTri;
+		}
+
+		private void MnuDangNhap_Click(object sender, EventArgs e)
+		{
+			var f = new FrmLogin(this);
+			f.MdiParent = this;
+			f.Show();
+		}
+
+		private void MnuDangXuat_Click(object sender, EventArgs e)
+		{
+			DaDangNhap = false;
+			HoTenNhanVien = string.Empty;
+			PhanQuyen();
+
+			// hủy bỏ các form con CRUD cần đăng nhập
+			foreach (var form in MdiChildren)
+			{
+				if (form is FrmQuanLyKhachHang)
+				{
+					form.Close();
+				}
+			}
+		}
 	}
 }
