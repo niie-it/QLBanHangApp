@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace QLBanHangApp
@@ -9,7 +10,10 @@ namespace QLBanHangApp
 		{
 			get
 			{
-				return @"Server=.;Database=QLBanHang;Trusted_Connection=True;";
+
+				//var connStr = ConfigurationManager.ConnectionStrings["MyConnStr"];
+				//var myValue = ConfigurationManager.AppSettings.Get("myKey");
+				return ConfigurationManager.ConnectionStrings["MyConnStr"].ToString();
 			}
 		}
 
