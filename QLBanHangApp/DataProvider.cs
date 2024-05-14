@@ -64,5 +64,32 @@ namespace QLBanHangApp
 				return false;
 			}
 		}
+
+		public static bool Execute(string sql, CommandType type, SqlParameter[] parameters)
+		{
+			try
+			{
+				var connection = new SqlConnection(ChuoiKetNoi);
+				var command = new SqlCommand
+				{
+					Connection = connection,
+					CommandType = type,
+					CommandText = sql
+				};
+				if (parameters != null)
+				{
+					command.Parameters.AddRange(parameters);
+				}
+				command.Connection.Open();
+				command.ExecuteNonQuery();
+				command.Connection.Close();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				//Handle error
+				return false;
+			}
+		}
 	}
 }

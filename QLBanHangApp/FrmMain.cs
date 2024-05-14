@@ -62,6 +62,7 @@ namespace QLBanHangApp
 
 			// xét quyền theo vai trò
 			MnuCauHinhHeThong.Enabled = DaDangNhap && Quyen == VaiTro.QuanTri;
+			MnuLapHoaDon.Enabled = DaDangNhap;
 		}
 
 		private void MnuDangNhap_Click(object sender, EventArgs e)
@@ -80,11 +81,18 @@ namespace QLBanHangApp
 			// hủy bỏ các form con CRUD cần đăng nhập
 			foreach (var form in MdiChildren)
 			{
-				if (form is FrmQuanLyKhachHang)
+				if (form is FrmQuanLyKhachHang || form is FrmLapHoaDon)
 				{
 					form.Close();
 				}
 			}
+		}
+
+		private void MnuLapHoaDon_Click(object sender, EventArgs e)
+		{
+			var f = new FrmLapHoaDon(this);
+			f.MdiParent = this;
+			f.Show();
 		}
 	}
 }
